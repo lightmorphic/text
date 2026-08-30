@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>uk.co.lightmorphic.text</id>
+  <name>Lightmorphic Text</name>
+  <summary>Manage your Espanso text expansions without editing YAML</summary>
+  <developer id="uk.co.lightmorphic">
+    <name>Lightmorphic</name>
+  </developer>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <description>
+    <p>
+      Lightmorphic Text is a graphical front end for Espanso, the text expander. It reads the
+      match files in your Espanso configuration, shows every trigger and its replacement
+      in one searchable list, and lets you add, change and remove them through a plain
+      form. Espanso is reloaded after each save, so a new snippet works the moment you
+      finish typing it.
+    </p>
+    <p>
+      Files you have written by hand stay yours: comments, key order and formatting are
+      left alone, and only the values you actually changed are rewritten. Snippets that
+      use Espanso features Lightmorphic Text cannot represent — variables, forms, scripts — are
+      listed and shown as they appear in the file, but never quietly rewritten.
+    </p>
+    <p>
+      If Espanso is not installed, Lightmorphic Text fetches the right build for your session
+      from Espanso's own releases and sets it up in your home folder. Nothing is
+      installed system-wide, so it works the same on an immutable system such as Fedora
+      Silverblue or Bazzite as it does on Linux Mint or Ubuntu. On Wayland it walks you
+      through the one permission step that needs your involvement.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Search every trigger and replacement as you type</li>
+      <li>Add, edit and delete snippets through a form, never YAML</li>
+      <li>Comment-preserving writes, with an automatic backup of every change</li>
+      <li>Espanso restarted after each save, so changes take effect immediately</li>
+      <li>Guided first run for X11 and Wayland, including installing Espanso itself</li>
+      <li>Light and dark, following your desktop</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">lightmorphic-text.desktop</launchable>
+
+  <url type="homepage">https://text.lightmorphic.com</url>
+  <url type="bugtracker">https://github.com/lightmorphic/text/issues</url>
+  <url type="vcs-browser">https://github.com/lightmorphic/text</url>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Every snippet in one searchable list, with the editor beside it</caption>
+      <image>https://raw.githubusercontent.com/lightmorphic/text/main/docs/shots/main.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>The guided first run, including installing Espanso for a Wayland session</caption>
+      <image>https://raw.githubusercontent.com/lightmorphic/text/main/docs/shots/setup.png</image>
+    </screenshot>
+  </screenshots>
+
+  <categories>
+    <category>Utility</category>
+    <category>TextTools</category>
+  </categories>
+
+  <keywords>
+    <keyword>espanso</keyword>
+    <keyword>snippet</keyword>
+    <keyword>expansion</keyword>
+    <keyword>abbreviation</keyword>
+    <keyword>autotext</keyword>
+  </keywords>
+
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </supports>
+
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="1.0.0" date="2026-08-30">
+      <description>
+        <p>First release.</p>
+      </description>
+    </release>
+  </releases>
+</component>

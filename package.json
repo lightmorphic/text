@@ -1,0 +1,64 @@
+{
+  "name": "lightmorphic-text",
+  "productName": "Lightmorphic Text",
+  "version": "1.0.0",
+  "description": "A graphical front end for Espanso: browse, search, add and edit text expansions without touching YAML.",
+  "main": "src/main/main.js",
+  "desktopName": "lightmorphic-text.desktop",
+  "license": "GPL-3.0-or-later",
+  "author": "Lightmorphic <claude@charlie.cx>",
+  "homepage": "https://text.lightmorphic.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightmorphic/text.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "node test/run-tests.js",
+    "icons": "node scripts/make-icon.js",
+    "build": "electron-builder --linux AppImage"
+  },
+  "build": {
+    "appId": "uk.co.lightmorphic.text",
+    "toolsets": {
+      "appimage": "1.0.3"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "lightmorphic",
+      "repo": "text"
+    },
+    "artifactName": "LightmorphicText-${version}-${arch}.AppImage",
+    "files": [
+      "src/**/*",
+      "assets/icon.png"
+    ],
+    "extraFiles": [
+      {
+        "from": "build/metainfo",
+        "to": "usr/share/metainfo"
+      }
+    ],
+    "linux": {
+      "target": "AppImage",
+      "syncDesktopName": true,
+      "icon": "assets/icon.png",
+      "category": "Utility",
+      "synopsis": "Manage your Espanso text expansions without editing YAML",
+      "desktop": {
+        "entry": {
+          "Keywords": "espanso;snippet;expansion;autocorrect;text;abbreviation;"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "electron": "^43.3.0",
+    "electron-builder": "^26.15.3",
+    "playwright": "^1.62.1"
+  }
+}
