@@ -1,0 +1,86 @@
+name: Release
+
+# Bumping "version" in package.json (and pushing to main) builds the AppImage
+# and publishes a GitHub Release with it and the auto-update manifest attached.
+# Running apps then offer the update themselves. Pushing again without a bump
+# is a no-op: the release-exists check makes this workflow idempotent.
+#
+# Values that reach shell commands go through env, never inline ${{ }}
+# interpolation, so no string from outside can inject shell.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'package.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version
+        id: version
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Check whether this version is already released
+        id: released
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Node
+        if: steps.released.outputs.exists == 'false'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.released.outputs.exists == 'false'
+        run: npm ci
+
+      - name: Run the tests
+        if: steps.released.outputs.exists == 'false'
+        run: npm test
+
+      - name: Build AppImage
+        if: steps.released.outputs.exists == 'false'
+        # --publish never: the release step below does the publishing, not
+        # electron-builder's own tag-triggered auto-publish.
+        run: npm run build -- --publish never
+
+      - name: Pull this version's notes out of the changelog
+        if: steps.released.outputs.exists == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          awk -v ver="$VERSION" '
+            $0 ~ "^## \\[" ver "\\]" { grab = 1; next }
+            /^## \[/ { grab = 0 }
+            grab' CHANGELOG.md > /tmp/release-notes.md
+          if ! [ -s /tmp/release-notes.md ]; then
+            echo "See CHANGELOG.md." > /tmp/release-notes.md
+          fi
+
+      - name: Create the release
+        if: steps.released.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release create "v$VERSION" dist/*.AppImage dist/latest-linux.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Lightmorphic Text $VERSION" \
+            --notes-file /tmp/release-notes.md
