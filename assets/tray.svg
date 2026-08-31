@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Lightmorphic Text">
+  <title>Lightmorphic Text</title>
+  <!-- The tray variant: the same artwork on a navy disc, with a brand-yellow
+       ring around the edge so the icon reads against dark and light bars. -->
+  <circle cx="256" cy="256" r="238" fill="none" stroke="#FBC711" stroke-width="20"/>
+  <circle cx="256" cy="256" r="218" fill="#111827"/>
+  <g fill="#FBC711">
+    <circle cx="176" cy="212" r="30"/>
+    <circle cx="176" cy="300" r="30"/>
+    <rect x="232" y="190" width="140" height="44" rx="22"/>
+    <rect x="232" y="278" width="88" height="44" rx="22"/>
+  </g>
+</svg>
