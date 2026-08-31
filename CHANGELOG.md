@@ -3,6 +3,14 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.9] - 2026-08-31
+
+- Export and import: two new header buttons. Export saves every snippet
+  file — comments, advanced snippets and installed packages included — as
+  one archive; import takes such an archive (or a single Espanso .yml
+  file) and adds its files alongside yours, never overwriting anything,
+  with Espanso reloaded straight after.
+
 ## [1.0.8] - 2026-08-31
 
 - The tray icon has its own artwork now: the glyphs on a navy disc with a

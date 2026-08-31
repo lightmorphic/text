@@ -1,6 +1,6 @@
 'use strict';
 
-const { app, BrowserWindow, ipcMain, shell, clipboard, Tray, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, clipboard, Tray, Menu, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -371,6 +371,103 @@ ipcMain.handle('espanso-service', async (event, action) => {
     if (action === 'restart') return await espanso.restartService(env.binary);
     if (action === 'register') return { ok: await espanso.registerService(env.binary) };
     return { error: 'Unknown action.' };
+  } catch (err) {
+    return failed(err);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Export and import. An export is the whole match directory in one archive —
+// comments, advanced snippets and packages included, nothing re-serialised.
+// An import copies .yml files in beside the existing ones, never overwriting.
+// ---------------------------------------------------------------------------
+
+const { execFile: execFileCb } = require('node:child_process');
+const fsp = require('node:fs/promises');
+
+function runTool(file, args) {
+  return new Promise((resolve) => {
+    execFileCb(file, args, { timeout: 60000 }, (error, stdout, stderr) => {
+      resolve({ ok: !error, stderr: String(stderr || '').trim() });
+    });
+  });
+}
+
+// base.yml already there? The import lands as base-imported.yml, and so on.
+async function freeName(dir, name) {
+  const stem = name.replace(/\.ya?ml$/i, '');
+  let candidate = name;
+  for (let n = 0; n < 100; n += 1) {
+    if (!fs.existsSync(path.join(dir, candidate))) return candidate;
+    candidate = `${stem}-imported${n ? `-${n}` : ''}.yml`;
+  }
+  throw new Error('Could not find a free file name for the import.');
+}
+
+ipcMain.handle('snippets-export', async () => {
+  try {
+    const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, {
+      title: 'Export snippets',
+      defaultPath: path.join(app.getPath('home'), 'my-snippets.tar.gz'),
+      filters: [{ name: 'Snippet archive', extensions: ['tar.gz', 'gz'] }],
+    });
+    if (canceled || !filePath) return { ok: false, cancelled: true };
+    const dir = matches.matchDir();
+    const result = await runTool('tar', ['-czf', filePath, '-C', dir, '.']);
+    if (!result.ok) return { error: result.stderr || 'The export could not be written.' };
+    return { ok: true, filePath };
+  } catch (err) {
+    return failed(err);
+  }
+});
+
+ipcMain.handle('snippets-import', async () => {
+  try {
+    const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
+      title: 'Import snippets',
+      filters: [
+        { name: 'Snippet archives and match files', extensions: ['gz', 'yml', 'yaml'] },
+      ],
+      properties: ['openFile'],
+    });
+    if (canceled || !filePaths.length) return { ok: false, cancelled: true };
+    const source = filePaths[0];
+    const dir = matches.matchDir();
+    await fsp.mkdir(dir, { recursive: true });
+
+    let files = [];
+    let cleanup = null;
+    if (/\.tar\.gz$|\.tgz$|\.gz$/i.test(source)) {
+      const work = await fsp.mkdtemp(path.join(app.getPath('temp'), 'lm-text-import-'));
+      cleanup = work;
+      const untar = await runTool('tar', ['-xzf', source, '-C', work]);
+      if (!untar.ok) return { error: untar.stderr || 'That archive could not be opened.' };
+      const walk = async (d) => {
+        for (const entry of await fsp.readdir(d, { withFileTypes: true })) {
+          const full = path.join(d, entry.name);
+          if (entry.isDirectory()) await walk(full);
+          else if (/\.ya?ml$/i.test(entry.name)) files.push(full);
+        }
+      };
+      await walk(work);
+    } else {
+      files = [source];
+    }
+    if (files.length === 0) return { error: 'No snippet files were found in that archive.' };
+
+    let imported = 0;
+    await guardWrite(async () => {
+      for (const file of files) {
+        const name = await freeName(dir, path.basename(file));
+        await fsp.copyFile(file, path.join(dir, name));
+        imported += 1;
+      }
+    });
+    if (cleanup) await fsp.rm(cleanup, { recursive: true, force: true });
+
+    const env = await espanso.describeEnvironment();
+    if (env.binary && env.service === 'running') await espanso.restartService(env.binary);
+    return { ok: true, imported };
   } catch (err) {
     return failed(err);
   }

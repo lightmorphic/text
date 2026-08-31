@@ -80,6 +80,11 @@
   <content_rating type="oars-1.1"/>
 
   <releases>
+    <release version="1.0.9" date="2026-08-31">
+      <description>
+        <p>Snippets can now be exported to a single archive and imported back, without ever overwriting what is already there.</p>
+      </description>
+    </release>
     <release version="1.0.8" date="2026-08-31">
       <description>
         <p>The tray icon gains a ringed disc so it stands out against any panel.</p>
