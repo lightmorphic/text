@@ -3,6 +3,14 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.5] - 2026-08-31
+
+- The tray icon now actually appears on GNOME with the AppIndicator
+  extension: the icon is served from a real file (tray icons can't be read
+  from inside the app bundle), and the tray check uses a tool every system
+  has. The icon is always created; only close-to-tray still depends on the
+  desktop really having a tray.
+
 ## [1.0.4] - 2026-08-31
 
 - The update dot is now a plain coloured circle in every state, as the

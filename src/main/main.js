@@ -188,26 +188,58 @@ function showMainWindow() {
   mainWindow.focus();
 }
 
-async function setupTray() {
-  // Is anyone on the session bus offering to host tray icons?
+// Is anyone on the session bus offering to host tray icons? Tried with
+// busctl first (systemd ships it everywhere), then gdbus. Only close-to-tray
+// depends on the answer — the icon itself is created regardless, since a
+// desktop with no tray simply never shows it.
+function checkForTrayWatcher() {
   const { execFile } = require('node:child_process');
-  const hasWatcher = await new Promise((resolve) => {
-    execFile('gdbus', ['call', '--session',
+  const attempts = [
+    ['busctl', ['--user', '--no-pager', 'status', 'org.kde.StatusNotifierWatcher']],
+    ['gdbus', ['call', '--session',
       '--dest', 'org.freedesktop.DBus',
       '--object-path', '/org/freedesktop/DBus',
       '--method', 'org.freedesktop.DBus.NameHasOwner',
-      'org.kde.StatusNotifierWatcher',
-    ], { timeout: 5000 }, (error, stdout) => {
-      resolve(!error && String(stdout).includes('true'));
-    });
+      'org.kde.StatusNotifierWatcher']],
+  ];
+  return new Promise((resolve) => {
+    const tryNext = (i) => {
+      if (i >= attempts.length) return resolve(false);
+      execFile(attempts[i][0], attempts[i][1], { timeout: 5000 }, (error, stdout) => {
+        if (attempts[i][0] === 'busctl') {
+          if (!error) return resolve(true);
+          // busctl present but name unowned exits non-zero; missing tool
+          // (ENOENT) means try the next tool instead.
+          if (error.code !== 'ENOENT') return resolve(false);
+          return tryNext(i + 1);
+        }
+        if (!error) return resolve(String(stdout).includes('true'));
+        return tryNext(i + 1);
+      });
+    };
+    tryNext(0);
   });
-  if (!hasWatcher) return;
+}
+
+// A tray icon served over StatusNotifier must be a real file on disk —
+// a path inside the app's asar archive fails without a word.
+function trayIconPath() {
+  const bundled = path.join(__dirname, '..', '..', 'assets', 'icon.png');
   try {
-    tray = new Tray(path.join(__dirname, '..', '..', 'assets', 'icon.png'));
+    const dest = path.join(app.getPath('userData'), 'tray-icon.png');
+    fs.copyFileSync(bundled, dest);
+    return dest;
+  } catch {
+    return bundled;
+  }
+}
+
+async function setupTray() {
+  try {
+    tray = new Tray(trayIconPath());
   } catch {
     return; // No tray is a state, not an error; close keeps meaning quit.
   }
-  trayAvailable = true;
   tray.setToolTip('Lightmorphic Text');
   tray.setContextMenu(Menu.buildFromTemplate([
     { label: 'Open Lightmorphic Text', click: showMainWindow },
@@ -215,6 +247,7 @@ async function setupTray() {
     { label: 'Quit', click: () => { quitting = true; app.quit(); } },
   ]));
   tray.on('click', showMainWindow);
+  trayAvailable = await checkForTrayWatcher();
 }
 
 app.whenReady().then(() => {
