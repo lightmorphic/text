@@ -80,6 +80,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ steps.version.outputs.version }}
         run: |
+          # A copy under a constant name, so the website's download button can
+          # point at .../releases/latest/download/LightmorphicText-x86_64.AppImage
+          # forever and always get the newest version.
+          cp dist/LightmorphicText-*-x86_64.AppImage dist/LightmorphicText-x86_64.AppImage
           gh release create "v$VERSION" dist/*.AppImage dist/latest-linux.yml \
             --repo "$GITHUB_REPOSITORY" \
             --title "Lightmorphic Text $VERSION" \
