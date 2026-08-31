@@ -27,6 +27,7 @@
   --dot-green: #4bae4f;
   --dot-amber: #ffc006;
   --dot-red: #f34236;
+  --dot-blue: #2295f1;
   --dot-grey: #9e9d9e;
 
   --radius: 0.875rem;
@@ -186,7 +187,8 @@ textarea:focus-visible,
 
 .update-dot {
   position: relative;
-  width: 20px; height: 20px;
+  /* The visible dot (inset 4px) is 26px — twice the 13px label text. */
+  width: 34px; height: 34px;
   padding: 0; border: none; background: none;
   border-radius: 50%;
   cursor: default;
@@ -201,10 +203,8 @@ textarea:focus-visible,
 }
 .update-dot[data-state="current"]::before { background: var(--dot-green); }
 .update-dot[data-state="available"]::before { background: var(--dot-amber); }
-.update-dot[data-state="downloaded"]::before { background: var(--dot-green); }
+.update-dot[data-state="downloaded"]::before { background: var(--dot-blue); }
 .update-dot[data-state="error"]::before { background: var(--dot-red); }
-.update-dot[data-state="available"],
-.update-dot[data-state="downloaded"] { cursor: pointer; }
 .update-dot[data-state="downloading"]::before { background: none; }
 
 .update-dot-ring {
@@ -218,7 +218,9 @@ textarea:focus-visible,
 .update-dot-ring-track { fill: none; stroke: var(--border); stroke-width: 2; }
 .update-dot-ring-fill {
   fill: none;
-  stroke: var(--dot-amber);
+  /* The spec's white progress line, flipped to near-black in the light
+     theme so it stays visible on a white header. */
+  stroke: var(--fg);
   stroke-width: 2;
   stroke-linecap: round;
   /* 2 * PI * r(8) = 50.27; the dash offset is driven from JS. */

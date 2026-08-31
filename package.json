@@ -1,7 +1,7 @@
 {
   "name": "lightmorphic-text",
   "productName": "Lightmorphic Text",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A graphical front end for Espanso: browse, search, add and edit text expansions without touching YAML.",
   "main": "src/main/main.js",
   "desktopName": "lightmorphic-text.desktop",

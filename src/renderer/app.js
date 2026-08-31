@@ -102,11 +102,11 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * 8;
 els.updateDotRingFill.style.strokeDasharray = String(RING_CIRCUMFERENCE);
 
 const UPDATE_DOT_LABELS = {
-  current: 'You\u2019re on the latest version \u2014 click to check again',
-  available: 'A new version is available \u2014 click to download it',
-  downloading: 'Downloading the new version',
-  downloaded: 'Downloaded \u2014 click to restart and finish the update',
-  error: 'Can\u2019t reach GitHub \u2014 click to try again',
+  current: 'Up to date \u2014 click to check again',
+  available: 'Update available \u2014 click to download',
+  downloading: 'Downloading',
+  downloaded: 'Click to restart',
+  error: 'Can\u2019t connect to GitHub \u2014 click to try again',
 };
 
 let updateState = null;
@@ -151,9 +151,9 @@ window.lightmorphicText.onUpdateState((incoming) => {
     manualCheck = false;
     // Yellow speaks for itself; green and red get their answer in words.
     if (incoming.status === 'none' && window.flashTooltip) {
-      window.flashTooltip(els.updateDot, 'You\u2019re on the latest version');
+      window.flashTooltip(els.updateDot, 'No update available');
     } else if (incoming.status === 'error' && window.flashTooltip) {
-      window.flashTooltip(els.updateDot, 'Can\u2019t reach GitHub right now');
+      window.flashTooltip(els.updateDot, 'Can\u2019t connect to GitHub');
     }
   }
   show(els.updateWidget, true);
