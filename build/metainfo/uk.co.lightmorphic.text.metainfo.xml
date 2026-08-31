@@ -80,6 +80,11 @@
   <content_rating type="oars-1.1"/>
 
   <releases>
+    <release version="1.0.1" date="2026-08-31">
+      <description>
+        <p>Espanso now learns your keyboard layout automatically on Wayland, so triggers using keys like # or @ work on non-US keyboards.</p>
+      </description>
+    </release>
     <release version="1.0.0" date="2026-08-30">
       <description>
         <p>First release.</p>

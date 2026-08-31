@@ -346,6 +346,25 @@ matches:
     assert.strictEqual(classifyServiceLog(''), null);
   });
 
+  await test('the desktop keyboard layout is read correctly', async () => {
+    const { parseGnomeSources, parseLocalectl, splitXkbSource } = espanso._internals;
+    assert.strictEqual(parseGnomeSources("[('xkb', 'gb')]"), 'gb');
+    assert.strictEqual(parseGnomeSources("[('xkb', 'gb+extd'), ('xkb', 'us')]"), 'gb+extd');
+    assert.strictEqual(parseGnomeSources('nothing useful'), null);
+    assert.strictEqual(parseLocalectl('   X11 Layout: gb,us\n   X11 Model: pc105'), 'gb');
+    assert.strictEqual(parseLocalectl(''), null);
+    assert.deepStrictEqual(splitXkbSource('gb'), { layout: 'gb', variant: null });
+    assert.deepStrictEqual(splitXkbSource('gb+extd'), { layout: 'gb', variant: 'extd' });
+  });
+
+  await test('a fresh Wayland config records the keyboard layout block shape', async () => {
+    // The block appended to default.yml must be valid YAML espanso accepts.
+    const YAML = require('yaml');
+    const doc = YAML.parse('keyboard_layout:\n  layout: "gb"\n  variant: "extd"\n');
+    assert.strictEqual(doc.keyboard_layout.layout, 'gb');
+    assert.strictEqual(doc.keyboard_layout.variant, 'extd');
+  });
+
   await test('the config directory follows XDG', async () => {
     assert.strictEqual(
       espanso.configDir(),
