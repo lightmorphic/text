@@ -3,6 +3,12 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.1] - 2026-08-31
+
+- On Wayland, the keyboard layout your desktop uses is now written into
+  Espanso's configuration automatically. Without it Espanso assumed a US
+  layout, so on a UK keyboard triggers using keys like # or @ never fired.
+
 ## [1.0.0] - 2026-08-30
 
 First release.

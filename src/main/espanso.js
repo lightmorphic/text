@@ -307,6 +307,54 @@ matches:
     replace: "Typed by Lightmorphic Text"
 `;
 
+// On Wayland, Espanso reads key presses straight from the keyboard device
+// and has to be told the layout — it cannot ask the compositor. Left
+// unspecified it assumes US, so on a UK keyboard characters like # and @
+// land on the wrong keys and any trigger using them never fires. The
+// desktop knows the layout; pass it along.
+function parseGnomeSources(text) {
+  const m = /\(\s*'xkb'\s*,\s*'([^']+)'\s*\)/.exec(String(text || ''));
+  return m ? m[1] : null;
+}
+
+function parseLocalectl(text) {
+  const m = /X11 Layout:\s*(\S+)/.exec(String(text || ''));
+  return m ? m[1].split(',')[0] : null;
+}
+
+// GNOME writes sources like 'gb' or 'gb+extd' — layout plus variant.
+function splitXkbSource(source) {
+  const [layout, variant] = String(source).split('+');
+  return { layout, variant: variant || null };
+}
+
+async function detectKeyboardLayout() {
+  const g = await run('gsettings', ['get', 'org.gnome.desktop.input-sources', 'sources']);
+  const fromGnome = g.ok ? parseGnomeSources(g.stdout) : null;
+  if (fromGnome) return splitXkbSource(fromGnome);
+  const l = await run('localectl', ['status']);
+  const fromLocalectl = l.ok ? parseLocalectl(l.stdout) : null;
+  if (fromLocalectl) return splitXkbSource(fromLocalectl);
+  return null;
+}
+
+async function ensureKeyboardLayout() {
+  if (detectSession() !== 'wayland') return;
+  const configFile = path.join(configDir(), 'config', 'default.yml');
+  const current = await fsp.readFile(configFile, 'utf8').catch(() => null);
+  if (current === null || current.includes('keyboard_layout')) return;
+  const detected = await detectKeyboardLayout();
+  if (!detected || !detected.layout) return;
+  const block = `
+# The keyboard layout, written by Lightmorphic Text. On Wayland, Espanso
+# reads keys straight from the keyboard device and must be told the layout;
+# without this it assumes US, and keys like # or @ land in the wrong place.
+keyboard_layout:
+  layout: "${detected.layout}"${detected.variant ? `\n  variant: "${detected.variant}"` : ''}
+`;
+  await fsp.writeFile(configFile, current + block, 'utf8');
+}
+
 async function ensureConfigSkeleton() {
   const root = configDir();
   await fsp.mkdir(path.join(root, 'config'), { recursive: true });
@@ -315,6 +363,7 @@ async function ensureConfigSkeleton() {
   const matchFile = path.join(root, 'match', 'base.yml');
   if (!exists(configFile)) await fsp.writeFile(configFile, DEFAULT_CONFIG, 'utf8');
   if (!exists(matchFile)) await fsp.writeFile(matchFile, DEFAULT_MATCHES, 'utf8');
+  await ensureKeyboardLayout();
   return root;
 }
 
@@ -777,5 +826,5 @@ module.exports = {
   addToInputGroup,
   inInputGroup,
   // exported for the tests
-  _internals: { extractDebData, fillMissingLibraries, readOsRelease, isImmutable, classifyServiceLog },
+  _internals: { extractDebData, fillMissingLibraries, readOsRelease, isImmutable, classifyServiceLog, parseGnomeSources, parseLocalectl, splitXkbSource },
 };
