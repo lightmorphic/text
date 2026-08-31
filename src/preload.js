@@ -21,6 +21,8 @@ contextBridge.exposeInMainWorld('lightmorphicText', {
   deleteMatch: (id) => ipcRenderer.invoke('match-delete', id),
   createFile: (name) => ipcRenderer.invoke('file-create', name),
 
+  exportSnippets: () => ipcRenderer.invoke('snippets-export'),
+  importSnippets: () => ipcRenderer.invoke('snippets-import'),
   openConfigDir: () => ipcRenderer.invoke('open-config-dir'),
   copyText: (text) => ipcRenderer.invoke('copy-text', text),
 

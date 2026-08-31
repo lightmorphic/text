@@ -7,7 +7,7 @@
 const els = {};
 [
   'header-actions', 'service-pill', 'service-text',
-  'btn-power', 'btn-restart', 'btn-open-dir', 'btn-refresh',
+  'btn-power', 'btn-restart', 'btn-export', 'btn-import', 'btn-open-dir', 'btn-refresh',
   'update-widget', 'update-widget-version', 'update-dot', 'update-dot-ring-fill',
   'screen-setup', 'setup-steps', 'setup-heading', 'setup-lede', 'setup-facts',
   'setup-progress', 'setup-bar-fill', 'setup-progress-text', 'setup-error',
@@ -850,6 +850,26 @@ els.btnRestart.addEventListener('click', async () => {
   await window.lightmorphicText.service('restart');
   await refreshEnvironment();
   els.btnRestart.disabled = false;
+});
+
+els.btnExport.addEventListener('click', async () => {
+  els.btnExport.disabled = true;
+  const result = await window.lightmorphicText.exportSnippets();
+  els.btnExport.disabled = false;
+  if (result.ok) flashSuccess('Snippets exported.');
+  else if (!result.cancelled) setNotice(els.editError, result.error || 'The export did not work.');
+});
+
+els.btnImport.addEventListener('click', async () => {
+  els.btnImport.disabled = true;
+  const result = await window.lightmorphicText.importSnippets();
+  els.btnImport.disabled = false;
+  if (result.ok) {
+    flashSuccess(result.imported === 1 ? 'Imported 1 file.' : `Imported ${result.imported} files.`);
+    await loadMatches();
+  } else if (!result.cancelled) {
+    setNotice(els.editError, result.error || 'The import did not work.');
+  }
 });
 
 els.btnOpenDir.addEventListener('click', () => window.lightmorphicText.openConfigDir());
