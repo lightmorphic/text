@@ -3,6 +3,12 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.4] - 2026-08-31
+
+- The update dot is now a plain coloured circle in every state, as the
+  widget spec says — the little download and restart glyphs inside it are
+  gone; the tooltip carries the words.
+
 ## [1.0.3] - 2026-08-31
 
 - A tray icon, where the desktop has a tray: closing the window now keeps
