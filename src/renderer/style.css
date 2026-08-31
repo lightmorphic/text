@@ -228,17 +228,6 @@ textarea:focus-visible,
   stroke-dashoffset: 50.27;
   transition: stroke-dashoffset 0.15s linear;
 }
-.update-dot-icon {
-  position: absolute;
-  inset: 4px;
-  width: 12px; height: 12px;
-  display: none;
-  pointer-events: none;
-}
-#update-dot-icon-download { color: var(--brand-navy); }
-#update-dot-icon-restart { color: #ffffff; }
-.update-dot[data-state="available"] #update-dot-icon-download { display: block; }
-.update-dot[data-state="downloaded"] #update-dot-icon-restart { display: block; }
 .update-dot.pulse::before { animation: pulse 0.7s ease-out; }
 @keyframes pulse {
   0%   { transform: scale(1); }
