@@ -224,7 +224,7 @@ function checkForTrayWatcher() {
 // A tray icon served over StatusNotifier must be a real file on disk —
 // a path inside the app's asar archive fails without a word.
 function trayIconPath() {
-  const bundled = path.join(__dirname, '..', '..', 'assets', 'icon.png');
+  const bundled = path.join(__dirname, '..', '..', 'assets', 'tray.png');
   try {
     const dest = path.join(app.getPath('userData'), 'tray-icon.png');
     fs.copyFileSync(bundled, dest);

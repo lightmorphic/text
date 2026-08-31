@@ -3,6 +3,12 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.8] - 2026-08-31
+
+- The tray icon has its own artwork now: the glyphs on a navy disc with a
+  yellow ring around the edge, so it stands out against dark and light
+  panels instead of blending in.
+
 ## [1.0.7] - 2026-08-31
 
 - The update widget shows just the version number and the dot; the app
