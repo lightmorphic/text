@@ -3,6 +3,15 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.3] - 2026-08-31
+
+- A tray icon, where the desktop has a tray: closing the window now keeps
+  Lightmorphic Text running quietly in the background (updates included),
+  with Open and Quit in the tray menu and a one-time notification saying so.
+  KDE has a tray out of the box; GNOME needs its AppIndicator extension. On
+  desktops with no tray, closing the window still quits, so the app can
+  never become unreachable.
+
 ## [1.0.2] - 2026-08-31
 
 - The update dot now matches the Lightmorphic update-widget spec exactly:

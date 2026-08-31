@@ -1,6 +1,6 @@
 'use strict';
 
-const { app, BrowserWindow, ipcMain, shell, clipboard } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, clipboard, Tray, Menu } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -50,6 +50,14 @@ const matches = require('./matches');
 })();
 
 let mainWindow = null;
+let tray = null;
+// Only true when a StatusNotifier watcher is actually on the bus. KDE always
+// has one; stock GNOME has none (it needs the AppIndicator extension), and an
+// app that "hides to the tray" with no tray becomes unreachable — a lesson
+// learned the hard way on Talkin. No watcher, no hide-on-close.
+let trayAvailable = false;
+let quitting = false;
+let hideNoticeShown = false;
 let watcher = null;
 let watchTimer = null;
 // True while Lightmorphic Text is writing, so its own saves don't come back as
@@ -74,6 +82,20 @@ function createWindow() {
   });
   mainWindow.removeMenu();
   mainWindow.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
+
+  // With a real tray present, closing the window keeps the app (and its
+  // half-hourly update checks) alive in the background instead of quitting.
+  mainWindow.on('close', (event) => {
+    if (!trayAvailable || quitting) return;
+    event.preventDefault();
+    mainWindow.hide();
+    if (!hideNoticeShown) {
+      hideNoticeShown = true;
+      const { execFile } = require('node:child_process');
+      execFile('notify-send', ['--app-name=Lightmorphic Text',
+        'Still running', 'Lightmorphic Text is in the tray. Use its menu to quit.'], () => {});
+    }
+  });
 
   // Links go to the system browser; nothing ever navigates inside the app.
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
@@ -160,10 +182,48 @@ function setupUpdates() {
   setInterval(check, 30 * 60 * 1000);
 }
 
+function showMainWindow() {
+  if (!mainWindow || mainWindow.isDestroyed()) { createWindow(); return; }
+  mainWindow.show();
+  mainWindow.focus();
+}
+
+async function setupTray() {
+  // Is anyone on the session bus offering to host tray icons?
+  const { execFile } = require('node:child_process');
+  const hasWatcher = await new Promise((resolve) => {
+    execFile('gdbus', ['call', '--session',
+      '--dest', 'org.freedesktop.DBus',
+      '--object-path', '/org/freedesktop/DBus',
+      '--method', 'org.freedesktop.DBus.NameHasOwner',
+      'org.kde.StatusNotifierWatcher',
+    ], { timeout: 5000 }, (error, stdout) => {
+      resolve(!error && String(stdout).includes('true'));
+    });
+  });
+  if (!hasWatcher) return;
+  try {
+    tray = new Tray(path.join(__dirname, '..', '..', 'assets', 'icon.png'));
+  } catch {
+    return; // No tray is a state, not an error; close keeps meaning quit.
+  }
+  trayAvailable = true;
+  tray.setToolTip('Lightmorphic Text');
+  tray.setContextMenu(Menu.buildFromTemplate([
+    { label: 'Open Lightmorphic Text', click: showMainWindow },
+    { type: 'separator' },
+    { label: 'Quit', click: () => { quitting = true; app.quit(); } },
+  ]));
+  tray.on('click', showMainWindow);
+}
+
 app.whenReady().then(() => {
   createWindow();
   setupUpdates();
+  setupTray();
 });
+
+app.on('before-quit', () => { quitting = true; });
 
 app.on('window-all-closed', () => {
   stopWatching();
