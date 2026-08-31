@@ -3,6 +3,15 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.6] - 2026-08-31
+
+- The tray icon now really appears on GNOME Wayland. Electron 43.3 broke
+  StatusNotifier tray icons there (electron/electron#52674) and the 43.4.1
+  fix does not hold on GNOME 50.4, so Electron is pinned to 43.2.0 — the
+  last version whose tray registration works — verified against a live
+  GNOME tray. Do not bump Electron past 43.2.0 until the upstream fix is
+  confirmed on GNOME Wayland.
+
 ## [1.0.5] - 2026-08-31
 
 - The tray icon now actually appears on GNOME with the AppIndicator
