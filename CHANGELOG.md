@@ -3,6 +3,11 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.7] - 2026-08-31
+
+- The update widget shows just the version number and the dot; the app
+  name next to it is gone. The version still links to the website.
+
 ## [1.0.6] - 2026-08-31
 
 - The tray icon now really appears on GNOME Wayland. Electron 43.3 broke
