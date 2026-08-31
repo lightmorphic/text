@@ -3,6 +3,13 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.2] - 2026-08-31
+
+- The update dot now matches the Lightmorphic update-widget spec exactly:
+  blue when a downloaded update is ready to install (it was green), a
+  slightly larger dot, the spec's tooltip wording, and a progress line
+  that stays visible in the light theme.
+
 ## [1.0.1] - 2026-08-31
 
 - On Wayland, the keyboard layout your desktop uses is now written into
