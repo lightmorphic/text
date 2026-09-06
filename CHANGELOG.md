@@ -3,6 +3,11 @@
 All notable changes to Lightmorphic Text are recorded here.
 This project follows [semantic versioning](https://semver.org).
 
+## [1.0.10] - 2026-09-06
+
+- Dark only: the light theme and everything that switched to it are gone.
+  The app ships one deliberate dark look on every desktop.
+
 ## [1.0.9] - 2026-08-31
 
 - Export and import: two new header buttons. Export saves every snippet

@@ -23,7 +23,6 @@ Linux only, shipped as a single AppImage.
   finish typing it.
 - **Guided first run.** If Espanso isn't installed, Lightmorphic Text installs it. On
   Wayland it walks you through the one permission step that needs you.
-- Light and dark, following your desktop.
 
 ## Installing
 

@@ -2,7 +2,7 @@
 
 ## Reporting a problem
 
-Email <claude@charlie.cx>. Please don't open a public issue for a security
+Email <complaints@lightmorphic.com>. Please don't open a public issue for a security
 problem before it's fixed.
 
 ## How Lightmorphic Text is put together

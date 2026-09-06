@@ -38,7 +38,6 @@
       <li>Comment-preserving writes, with an automatic backup of every change</li>
       <li>Espanso restarted after each save, so changes take effect immediately</li>
       <li>Guided first run for X11 and Wayland, including installing Espanso itself</li>
-      <li>Light and dark, following your desktop</li>
     </ul>
   </description>
 
@@ -80,6 +79,11 @@
   <content_rating type="oars-1.1"/>
 
   <releases>
+    <release version="1.0.10" date="2026-09-06">
+      <description>
+        <p>Dark only: one deliberate look on every desktop.</p>
+      </description>
+    </release>
     <release version="1.0.9" date="2026-08-31">
       <description>
         <p>Snippets can now be exported to a single archive and imported back, without ever overwriting what is already there.</p>

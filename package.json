@@ -1,12 +1,12 @@
 {
   "name": "lightmorphic-text",
   "productName": "Lightmorphic Text",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A graphical front end for Espanso: browse, search, add and edit text expansions without touching YAML.",
   "main": "src/main/main.js",
   "desktopName": "lightmorphic-text.desktop",
   "license": "GPL-3.0-or-later",
-  "author": "Lightmorphic <claude@charlie.cx>",
+  "author": "Lightmorphic",
   "homepage": "https://text.lightmorphic.com",
   "repository": {
     "type": "git",

@@ -25,10 +25,10 @@ matches:
     replace: |-
       Charlie Lark
       Lightmorphic
-      hello@lightmorphic.co.uk
+      charlie@example.com
 
   - triggers: [":em", ":mail"]
-    replace: "hello@lightmorphic.co.uk"
+    replace: "charlie@example.com"
     word: true
 
   - trigger: ":tel"
@@ -105,13 +105,6 @@ matches:
   await page.waitForSelector('#field-raw-wrap:not([hidden])');
   await page.waitForTimeout(300);
   await page.screenshot({ path: path.join(OUT, 'advanced.png') });
-
-  // --- the same screen in dark mode ---------------------------------------
-  await page.emulateMedia({ colorScheme: 'dark' });
-  await page.click('.entry[data-id="base.yml#0"]');
-  await page.waitForTimeout(300);
-  await page.screenshot({ path: path.join(OUT, 'main-dark.png') });
-  await page.emulateMedia({ colorScheme: 'light' });
 
   // Prove the round trip really works before calling these shots good.
   await page.click('#btn-new');

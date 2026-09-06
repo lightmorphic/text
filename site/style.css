@@ -7,52 +7,22 @@
   font-display: swap;
 }
 
+/* Dark by design: one deliberate look, no theme switching. */
 :root {
-  color-scheme: light dark;
-  --bg: #ffffff;  --fg: #09090b;
-  --panel: #ffffff;  --panel-border: rgba(24, 24, 40, 0.10);
-  --border: #e4e4e7;  --muted: #f4f4f5;  --muted-fg: #71717a;
-  --shadow-panel: 0 1px 2px rgba(24,24,40,.05), 0 8px 24px -16px rgba(24,24,40,.18);
-
-  --accent: #fbc711;  --accent-hover: #ddaf0f;  --on-accent: #645007;
-  --accent-container: #fff8e2;  --on-accent-container: #5f4c06;
-
-  --brand-navy: #111827;
-  --link: #1b74bc;
-
-  --radius: 0.875rem;
-  --panel-radius: 1.375rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #09090b;  --fg: #fafafa;
-    --panel: #1b1d29;  --panel-border: rgba(255,255,255,.09);
-    --border: #27272a;  --muted: #1c1c1f;  --muted-fg: #a1a1aa;
-    --shadow-panel: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px -16px rgba(0,0,0,.6);
-    --accent-container: #4b3c05;  --on-accent-container: #fde694;
-    --link: #2295f1;
-  }
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #ffffff;  --fg: #09090b;
-  --panel: #ffffff;  --panel-border: rgba(24, 24, 40, 0.10);
-  --border: #e4e4e7;  --muted: #f4f4f5;  --muted-fg: #71717a;
-  --shadow-panel: 0 1px 2px rgba(24,24,40,.05), 0 8px 24px -16px rgba(24,24,40,.18);
-  --accent-container: #fff8e2;  --on-accent-container: #5f4c06;
-  --link: #1b74bc;
-}
-
-:root[data-theme="dark"] {
   color-scheme: dark;
   --bg: #09090b;  --fg: #fafafa;
   --panel: #1b1d29;  --panel-border: rgba(255,255,255,.09);
   --border: #27272a;  --muted: #1c1c1f;  --muted-fg: #a1a1aa;
   --shadow-panel: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px -16px rgba(0,0,0,.6);
+
+  --accent: #fbc711;  --accent-hover: #ddaf0f;  --on-accent: #645007;
   --accent-container: #4b3c05;  --on-accent-container: #fde694;
+
+  --brand-navy: #111827;
   --link: #2295f1;
+
+  --radius: 0.875rem;
+  --panel-radius: 1.375rem;
 }
 
 * { box-sizing: border-box; }
@@ -118,33 +88,6 @@ header nav a {
 
 header nav a:hover { color: var(--fg); }
 
-#theme-toggle {
-  background: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--fg);
-  width: 2.25rem;
-  height: 2.25rem;
-  display: grid;
-  place-items: center;
-  cursor: default;
-}
-
-#theme-toggle svg { width: 1.05rem; height: 1.05rem; }
-#theme-toggle .moon { display: none; }
-:root[data-theme="dark"] #theme-toggle .sun { display: none; }
-:root[data-theme="dark"] #theme-toggle .moon { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) #theme-toggle .sun { display: none; }
-  :root:not([data-theme="light"]) #theme-toggle .moon { display: block; }
-}
-
-/* -------------------------------------------------------------------- hero */
-
-.hero {
-  padding: 3.5rem 0 2.5rem;
-  text-align: center;
-}
 
 .hero h1 {
   font-size: clamp(2rem, 5vw, 2.75rem);
@@ -319,15 +262,6 @@ footer .wrap {
 
 footer .spacer { margin-left: auto; }
 
-/* Hero screenshot follows the page's theme, including the manual toggle.
-   Selectors include .shot so they outweigh the base `.shot img` rule. */
-.shot .dark-shot { display: none; }
-:root[data-theme="dark"] .shot .light-shot { display: none; }
-:root[data-theme="dark"] .shot .dark-shot { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .shot .light-shot { display: none; }
-  :root:not([data-theme="light"]) .shot .dark-shot { display: block; }
-}
 
 /* ------------------------------------------------------------------- guide */
 
@@ -399,8 +333,7 @@ footer .spacer { margin-left: auto; }
 @media (max-width: 34rem) {
   header .wrap { flex-wrap: wrap; }
   header nav { margin-left: 0; width: 100%; gap: 1rem; }
-  header nav .theme-spacer, #theme-toggle { margin-left: auto; }
-}
+  }
 
 /* Grid items refuse to shrink below their content by default, which lets
    the install command's code block push the page sideways on a phone. */
@@ -414,3 +347,34 @@ header {
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
+
+/* ----------------------------------------------------------- legal footer */
+
+.subfooter {
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 0 1.75rem;
+  color: var(--muted-fg);
+  font-size: 0.8125rem;
+}
+.subfooter .wrap {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.subfooter p { margin: 0; }
+.subfooter nav {
+  margin-left: auto;
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.subfooter a { color: var(--muted-fg); text-decoration: none; font-weight: 600; }
+.subfooter a:hover { color: var(--fg); }
+
+/* -------------------------------------------------------------- legal page */
+
+.legal { max-width: 42rem; }
+.legal h1 { font-size: 1.75rem; letter-spacing: -0.01em; }
+.legal h2 { font-size: 1.125rem; margin-top: 2rem; }
+.legal p, .legal li { color: var(--muted-fg); }
