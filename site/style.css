@@ -405,3 +405,12 @@ footer .spacer { margin-left: auto; }
 /* Grid items refuse to shrink below their content by default, which lets
    the install command's code block push the page sideways on a phone. */
 .install ol > li { min-width: 0; }
+
+/* The header stays put while the page scrolls. */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
