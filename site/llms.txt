@@ -1,0 +1,11 @@
+# Lightmorphic Text
+
+A graphical front end for Espanso, the text expander, for Linux. Browse,
+search, add and edit text expansions without opening a YAML file. Free and
+open source (GPL-3.0-or-later), shipped as a single AppImage by
+Lightmorphic Ltd (UK company 17423646).
+
+- Website: https://text.lightmorphic.com/
+- Guide: https://text.lightmorphic.com/help.html
+- Source: https://github.com/lightmorphic/text
+- Download: https://github.com/lightmorphic/text/releases/latest/download/LightmorphicText-x86_64.AppImage

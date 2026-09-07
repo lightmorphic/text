@@ -1,14 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lightmorphic Text — a graphical front end for Espanso</title>
+  <title>Lightmorphic Text, a graphical front end for Espanso</title>
   <meta name="description" content="Browse, search, add and edit your Espanso text expansions without ever opening a YAML file. Free software for Linux, shipped as a single AppImage.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://apps.lightmorphic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://apps.lightmorphic.com; font-src 'self'; connect-src https://apps.lightmorphic.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'">
+  <link rel="canonical" href="https://text.lightmorphic.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lightmorphic Text, a graphical front end for Espanso">
+  <meta property="og:description" content="Browse, search, add and edit your Espanso text expansions without ever opening a YAML file. Free software for Linux, shipped as a single AppImage.">
+  <meta property="og:url" content="https://text.lightmorphic.com/">
+  <meta property="og:image" content="https://text.lightmorphic.com/shots/main.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lightmorphic Text, a graphical front end for Espanso">
+  <meta name="twitter:description" content="Browse, search, add and edit your Espanso text expansions without ever opening a YAML file. Free software for Linux, shipped as a single AppImage.">
+  <meta name="twitter:image" content="https://text.lightmorphic.com/shots/main.png">
+  <meta name="theme-color" content="#09090b">
+  <link rel="preload" href="fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://apps.lightmorphic.com">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Lightmorphic Text",
+    "operatingSystem": "Linux",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "A graphical front end for Espanso, the text expander. Browse, search, add and edit expansions without opening a YAML file.",
+    "url": "https://text.lightmorphic.com/",
+    "image": "https://text.lightmorphic.com/shots/main.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+    "dateModified": "2026-09-07",
+    "author": {
+      "@type": "Organization",
+      "name": "Lightmorphic Ltd",
+      "url": "https://lightmorphic.co.uk",
+      "address": { "@type": "PostalAddress", "streetAddress": "82A James Carter Road", "addressLocality": "Mildenhall", "postalCode": "IP28 7DE", "addressCountry": "GB" }
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", "@id": "https://lightmorphic.co.uk/#org",
+        "name": "Lightmorphic Ltd", "url": "https://lightmorphic.co.uk",
+        "email": "privacy@lightmorphic.com",
+        "address": { "@type": "PostalAddress", "streetAddress": "82A James Carter Road", "addressLocality": "Mildenhall", "postalCode": "IP28 7DE", "addressCountry": "GB" },
+        "sameAs": ["https://github.com/lightmorphic", "https://find-and-search.company-information.service.gov.uk/company/17423646"] },
+      { "@type": "WebSite", "name": "Lightmorphic Text", "url": "https://text.lightmorphic.com/",
+        "dateModified": "2026-09-07", "publisher": { "@id": "https://lightmorphic.co.uk/#org" } }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why is the download around 120 MB?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lightmorphic Text is built on Electron, which carries its own display engine instead of borrowing one from your system. That is what makes it look and work exactly the same on every version and flavour of Linux, GNOME, KDE or anything else, with nothing to install first."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it work on immutable distributions?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Everything is installed in your home folder, never system-wide, so openSUSE Aeon, Fedora Silverblue and Bazzite behave the same as any other distribution. Wayland and X11 are both supported."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where are my snippets kept?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In your own Espanso configuration folder, as standard Espanso files. Stop using the app tomorrow and your snippets keep working. Every save also keeps a dated backup on your machine."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the app collect any data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Its only network connections fetch updates of the app and of Espanso from GitHub, and a clipboard tool from Debian's public archive where the system lacks one. Nothing about you is sent anywhere."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to the content</a>
 
 <header>
   <div class="wrap">
@@ -25,7 +116,7 @@
   </div>
 </header>
 
-<main>
+<main id="main">
 
   <div class="hero wrap">
     <h1>Your Espanso snippets, without the YAML</h1>
@@ -69,7 +160,7 @@
               as you type, so a half-remembered snippet is a few keystrokes away.
             </p>
           </div>
-          <img src="shots/search.png" width="1240" height="840"
+          <img loading="lazy" src="shots/search.png" width="1240" height="840"
                alt="Searching in Lightmorphic Text: the list narrows as the query is typed">
         </div>
       </div>
@@ -83,7 +174,7 @@
         </h3>
         <p>
           Trigger, replacement, whole-words-only and case matching.
-          That's the whole thing — no syntax to learn, nothing to indent.
+          That's the whole thing, no syntax to learn, nothing to indent.
         </p>
       </div>
 
@@ -136,12 +227,37 @@
           Guided first run
         </h3>
         <p>
-          If Espanso isn't installed, Lightmorphic Text installs it — in your home
+          If Espanso isn't installed, Lightmorphic Text installs it, in your home
           folder, nothing system-wide. On Wayland it walks you through the one
           permission step that needs you.
         </p>
       </div>
 
+    </div>
+  </section>
+
+  <section id="faq" class="wrap">
+    <h2>Questions people ask</h2>
+    <div class="panel install">
+      <h3>Why is the download around 120&nbsp;MB?</h3>
+      <p class="hint">Lightmorphic Text is built on Electron, which carries its
+      own display engine instead of borrowing one from your system. That is
+      what makes it look and work exactly the same on every version and
+      flavour of Linux, GNOME, KDE or anything else, with nothing to install
+      first.</p>
+      <h3>Does it work on immutable distributions?</h3>
+      <p class="hint">Yes. Everything is installed in your home folder, never
+      system-wide, so openSUSE Aeon, Fedora Silverblue and Bazzite behave the
+      same as any other distribution. Wayland and X11 are both supported.</p>
+      <h3>Where are my snippets kept?</h3>
+      <p class="hint">In your own Espanso configuration folder, as standard
+      Espanso files. Stop using the app tomorrow and your snippets keep
+      working. Every save also keeps a dated backup on your machine.</p>
+      <h3>Does the app collect any data?</h3>
+      <p class="hint">No. Its only network connections fetch updates of the
+      app and of Espanso from GitHub, and a clipboard tool from Debian's
+      public archive where the system lacks one. Nothing about you is sent
+      anywhere.</p>
     </div>
   </section>
 
@@ -151,7 +267,7 @@
       <ol>
         <li>
           <a href="https://github.com/lightmorphic/text/releases/latest/download/LightmorphicText-x86_64.AppImage">Download
-          Lightmorphic Text</a> — always the newest version.
+          Lightmorphic Text</a>, always the newest version.
         </li>
         <li>
           Make it executable and run it:
@@ -160,17 +276,10 @@
         </li>
       </ol>
       <p class="hint">
-        Works out of the box on current distributions and older ones alike —
-        no extra FUSE packages to install. Lightmorphic Text checks for updates itself
+        Works out of the box on current distributions and older ones alike,
+        with no extra FUSE packages to install. Lightmorphic Text checks for updates itself
         and offers them from the dot in its top-right corner. Works the same on
         immutable systems such as Fedora Silverblue and Bazzite.
-      </p>
-      <p class="hint">
-        Why is the download around 120&nbsp;MB? Lightmorphic Text is built on
-        Electron, which carries its own display engine instead of borrowing
-        one from your system. That's what makes it look and work exactly the
-        same on every version and flavour of Linux — GNOME, KDE, or anything
-        else — with nothing to install first.
       </p>
     </div>
   </section>
@@ -192,9 +301,10 @@
 <div class="subfooter">
   <div class="wrap">
     <p>
-      © Lightmorphic Ltd. Registered in England and Wales, company number 17423646.<br>
+      © Lightmorphic Ltd. Registered in England and Wales, company number <a href="https://find-and-search.company-information.service.gov.uk/company/17423646">17423646</a>.<br>
       Registered office: 82A James Carter Road, Mildenhall, IP28 7DE.<br>
-      Page last updated: 6 September 2026.
+      <!-- Update this date whenever this page changes. -->
+      Page last updated: <time datetime="2026-09-07">7 September 2026</time>.
     </p>
     <nav aria-label="Legal">
       <a href="privacy.html">Privacy</a>

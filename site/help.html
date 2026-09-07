@@ -1,14 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guide — Lightmorphic Text</title>
-  <meta name="description" content="How to use Lightmorphic Text: the guided first run, adding and finding snippets, backups, the update dot and the tray — with pictures.">
+  <title>Guide, Lightmorphic Text</title>
+  <meta name="description" content="How to use Lightmorphic Text: the guided first run, adding and finding snippets, backups, the update dot and the tray, with pictures.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://apps.lightmorphic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://apps.lightmorphic.com; font-src 'self'; connect-src https://apps.lightmorphic.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'">
+  <link rel="canonical" href="https://text.lightmorphic.com/help.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Guide, Lightmorphic Text">
+  <meta property="og:description" content="How to use Lightmorphic Text: the guided first run, adding and finding snippets, backups, the update dot and the tray, with pictures.">
+  <meta property="og:url" content="https://text.lightmorphic.com/help.html">
+  <meta property="og:image" content="https://text.lightmorphic.com/shots/main.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Guide, Lightmorphic Text">
+  <meta name="twitter:description" content="How to use Lightmorphic Text: the guided first run, adding and finding snippets, backups, the update dot and the tray, with pictures.">
+  <meta name="twitter:image" content="https://text.lightmorphic.com/shots/main.png">
+  <meta name="theme-color" content="#09090b">
+  <link rel="preload" href="fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://apps.lightmorphic.com">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", "@id": "https://lightmorphic.co.uk/#org",
+        "name": "Lightmorphic Ltd", "url": "https://lightmorphic.co.uk",
+        "email": "privacy@lightmorphic.com",
+        "address": { "@type": "PostalAddress", "streetAddress": "82A James Carter Road", "addressLocality": "Mildenhall", "postalCode": "IP28 7DE", "addressCountry": "GB" },
+        "sameAs": ["https://github.com/lightmorphic", "https://find-and-search.company-information.service.gov.uk/company/17423646"] },
+      { "@type": "WebSite", "name": "Lightmorphic Text", "url": "https://text.lightmorphic.com/",
+        "dateModified": "2026-09-07", "publisher": { "@id": "https://lightmorphic.co.uk/#org" } }
+    ]
+  }
+  </script>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to the content</a>
 
 <header>
   <div class="wrap">
@@ -25,7 +55,7 @@
   </div>
 </header>
 
-<main>
+<main id="main">
 
   <div class="hero wrap">
     <h1>How to use Lightmorphic Text</h1>
@@ -42,8 +72,8 @@
         <h2>The first run sets everything up</h2>
         <p>
           The first time you open the app, it checks what your computer
-          already has and does the rest itself: it fetches Espanso — the
-          engine that does the actual text expanding — and, on Wayland
+          already has and does the rest itself: it fetches Espanso, the
+          engine that does the actual text expanding, and, on Wayland
           desktops, asks once for permission to read the keyboard, using
           your desktop's own password prompt. Nothing is installed
           system-wide, so it works the same on immutable systems like
@@ -62,14 +92,14 @@
         <p>
           Press the yellow plus, type the trigger (what you'll type, like
           <strong>:sig</strong>) and the replacement (what appears instead),
-          and save. The snippet works the moment it's saved — Espanso is
+          and save. The snippet works the moment it's saved, Espanso is
           reloaded for you. "Whole words only" stops a trigger firing in the
           middle of longer words, and "Match the case I type" makes
           <strong>:brb</strong> and <strong>:BRB</strong> behave differently.
         </p>
       </div>
       <div class="guide-shot">
-        <img src="shots/main.png" width="1240" height="840"
+        <img loading="lazy" src="shots/main.png" width="1240" height="840"
              alt="The main window: the snippet list on the left, the editing form on the right">
       </div>
     </div>
@@ -79,12 +109,12 @@
         <h2>Search finds anything, as you type</h2>
         <p>
           The search box matches triggers and replacement text at the same
-          time, highlighting what it found. A half-remembered snippet — "the
-          one with <em>thanks</em> in it somewhere" — is a few keystrokes away.
+          time, highlighting what it found. A half-remembered snippet, "the
+          one with <em>thanks</em> in it somewhere", is a few keystrokes away.
         </p>
       </div>
       <div class="guide-shot">
-        <img src="shots/search.png" width="1240" height="840"
+        <img loading="lazy" src="shots/search.png" width="1240" height="840"
              alt="Searching: the list narrows and matching text is highlighted">
       </div>
     </div>
@@ -93,7 +123,7 @@
       <div class="guide-text">
         <h2>Clever snippets are shown, never touched</h2>
         <p>
-          Espanso can do advanced things — dates, forms, scripts. Snippets
+          Espanso can do advanced things, dates, forms, scripts. Snippets
           like that are listed and shown exactly as they appear in your
           file, marked <strong>advanced</strong> and read-only. The app never
           rewrites what it can't fully represent, so nothing you built by
@@ -101,7 +131,7 @@
         </p>
       </div>
       <div class="guide-shot">
-        <img src="shots/advanced.png" width="1240" height="840"
+        <img loading="lazy" src="shots/advanced.png" width="1240" height="840"
              alt="An advanced snippet shown read-only, exactly as it appears in the file">
       </div>
     </div>
@@ -114,7 +144,7 @@
       <div class="button-guide">
         <div>
           <span class="icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v6M6 5.2a6.2 6.2 0 1 0 8 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <p><strong>Turn Espanso off or on.</strong> Off means off — text expansion stops, and stays stopped through restarts, until you press it again.</p>
+          <p><strong>Turn Espanso off or on.</strong> Off means off, text expansion stops, and stays stopped through restarts, until you press it again.</p>
         </div>
         <div>
           <span class="icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M15.5 6.5A6 6 0 1 0 16.4 10M15.5 6.5V3m0 3.5H12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -122,7 +152,7 @@
         </div>
         <div>
           <span class="icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 12V3m0 9 3.2-3.2M10 12 6.8 8.8M4 13v2.3A1.7 1.7 0 0 0 5.7 17h8.6a1.7 1.7 0 0 0 1.7-1.7V13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <p><strong>Export.</strong> Saves every snippet — comments, advanced ones, installed packages — into a single backup file, wherever you choose.</p>
+          <p><strong>Export.</strong> Saves every snippet, comments, advanced ones, installed packages, into a single backup file, wherever you choose.</p>
         </div>
         <div>
           <span class="icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0 3.2-3.2M10 12 6.8 8.8" transform="rotate(180 10 7.5)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 13v2.3A1.7 1.7 0 0 0 5.7 17h8.6a1.7 1.7 0 0 0 1.7-1.7V13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -130,11 +160,11 @@
         </div>
         <div>
           <span class="icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 6.2A1.7 1.7 0 0 1 4.2 4.5h3.1l1.4 1.7h7.1a1.7 1.7 0 0 1 1.7 1.7v6.4a1.7 1.7 0 0 1-1.7 1.7H4.2a1.7 1.7 0 0 1-1.7-1.7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>
-          <p><strong>Open the config folder.</strong> For a look at the files themselves — they're yours, and other editors are welcome.</p>
+          <p><strong>Open the config folder.</strong> For a look at the files themselves, they're yours, and other editors are welcome.</p>
         </div>
         <div>
           <span class="icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 10a6.5 6.5 0 1 1-1.9-4.6M16.5 3v3.4h-3.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <p><strong>Reload from disk.</strong> If something else edited your files, this refreshes the list — though the app usually notices by itself.</p>
+          <p><strong>Reload from disk.</strong> If something else edited your files, this refreshes the list, though the app usually notices by itself.</p>
         </div>
       </div>
     </div>
@@ -157,7 +187,7 @@
         <div class="state">
           <span class="dot ring"></span>
           <strong>Ring</strong>
-          <span>Downloading — the line traces the edge as it goes.</span>
+          <span>Downloading, the line traces the edge as it goes.</span>
         </div>
         <div class="state">
           <span class="dot blue"></span>
@@ -190,7 +220,7 @@
         <p>
           Before any file is changed, a dated copy is kept under
           <strong>~/.local/share/lightmorphic-text/backups</strong>. Your
-          comments, spacing and ordering are preserved on every save — only
+          comments, spacing and ordering are preserved on every save, only
           the values you actually changed are rewritten.
         </p>
       </div>
@@ -223,9 +253,10 @@
 <div class="subfooter">
   <div class="wrap">
     <p>
-      © Lightmorphic Ltd. Registered in England and Wales, company number 17423646.<br>
+      © Lightmorphic Ltd. Registered in England and Wales, company number <a href="https://find-and-search.company-information.service.gov.uk/company/17423646">17423646</a>.<br>
       Registered office: 82A James Carter Road, Mildenhall, IP28 7DE.<br>
-      Page last updated: 6 September 2026.
+      <!-- Update this date whenever this page changes. -->
+      Page last updated: <time datetime="2026-09-07">7 September 2026</time>.
     </p>
     <nav aria-label="Legal">
       <a href="privacy.html">Privacy</a>

@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'Manrope';
-  src: url('fonts/Manrope-VariableFont_wght.ttf') format('truetype-variations');
+  src: url('fonts/Manrope-Variable.woff2') format('woff2-variations');
   font-weight: 200 800;
   font-display: swap;
 }
@@ -20,6 +20,12 @@
 
   --brand-navy: #111827;
   --link: #2295f1;
+
+  /* Status hues, straight from the Lightmorphic palette. */
+  --dot-green: #4bae4f;
+  --dot-amber: #ffc006;
+  --dot-blue: #2295f1;
+  --dot-red: #f34236;
 
   --radius: 0.875rem;
   --panel-radius: 1.375rem;
@@ -300,10 +306,10 @@ footer .spacer { margin-left: auto; }
 .dot-legend .dot {
   width: 34px; height: 34px; border-radius: 50%;
 }
-.dot-legend .dot.green { background: #4bae4f; }
-.dot-legend .dot.yellow { background: #ffc006; }
-.dot-legend .dot.blue { background: #2295f1; }
-.dot-legend .dot.red { background: #f34236; }
+.dot-legend .dot.green { background: var(--dot-green); }
+.dot-legend .dot.yellow { background: var(--dot-amber); }
+.dot-legend .dot.blue { background: var(--dot-blue); }
+.dot-legend .dot.red { background: var(--dot-red); }
 .dot-legend .dot.ring {
   background: none;
   border: 3px solid var(--border);
@@ -378,3 +384,28 @@ header {
 .legal h1 { font-size: 1.75rem; letter-spacing: -0.01em; }
 .legal h2 { font-size: 1.125rem; margin-top: 2rem; }
 .legal p, .legal li { color: var(--muted-fg); }
+
+/* ------------------------------------------------------------ accessibility */
+
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -3rem;
+  z-index: 200;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  transition: top 0.15s ease;
+}
+.skip-link:focus-visible { top: 1rem; }
+
+/* Comfortable tap targets on the small nav and legal links. */
+header nav a, .subfooter nav a { padding: 0.6rem 0.2rem; display: inline-block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link { transition: none; }
+}
+
+/* Anchored sections land below the sticky header, not underneath it. */
+[id] { scroll-margin-top: 5.5rem; }
